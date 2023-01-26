@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://55qhqgsd7ra2"]
+[gd_scene load_steps=7 format=3 uid="uid://55qhqgsd7ra2"]
 
 [ext_resource type="Script" path="res://scenes/entities/automatons/player.gd" id="1_5n2fv"]
+[ext_resource type="Script" path="res://scenes/entities/components/component_holder.gd" id="2_55ivu"]
+[ext_resource type="Script" path="res://scenes/entities/components/physics_component.gd" id="3_w7xoq"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_j1n0g"]
 
@@ -27,3 +29,9 @@ shape = SubResource("CapsuleShape3D_4oytx")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 current = true
+
+[node name="ComponentHolder" type="Node" parent="."]
+script = ExtResource("2_55ivu")
+
+[node name="PhysicsComponent" type="Node" parent="ComponentHolder"]
+script = ExtResource("3_w7xoq")
