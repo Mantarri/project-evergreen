@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://55qhqgsd7ra2"]
+[gd_scene load_steps=14 format=3 uid="uid://55qhqgsd7ra2"]
 
 [ext_resource type="Script" path="res://scenes/entities/automatons/player.gd" id="1_5n2fv"]
 [ext_resource type="Script" path="res://scenes/entities/components/component_holder.gd" id="2_55ivu"]
 [ext_resource type="Script" path="res://scenes/entities/components/physics_component.gd" id="3_w7xoq"]
+[ext_resource type="AudioStream" uid="uid://d1y7unojjchff" path="res://assets_raw/audio/effects/FOOTSTEP - Metal Board Walk Barefoot Male - 2.wav" id="4_xp28a"]
+[ext_resource type="AudioStream" uid="uid://dhh3iur8fh7lq" path="res://assets_raw/audio/effects/FOOTSTEP - Metal Board Walk Barefoot Male - 24.wav" id="5_ysx2k"]
+[ext_resource type="AudioStream" uid="uid://4oevxh1a70c4" path="res://assets_raw/audio/effects/FOOTSTEP - Metal Board Walk Barefoot Male - 27.wav" id="6_g7k5g"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_j1n0g"]
+height = 1.7
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_m8tgm"]
 top_radius = 0.25
@@ -12,6 +16,54 @@ bottom_radius = 0.25
 height = 0.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4oytx"]
+height = 1.7
+
+[sub_resource type="Animation" id="Animation_8kddp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jfoef"]
+resource_name = "camera_bob"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0), Vector3(0, 0.525, 0), Vector3(0, 0.5, 0), Vector3(0, 0.475, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vent4"]
+_data = {
+"RESET": SubResource("Animation_8kddp"),
+"camera_bob": SubResource("Animation_jfoef")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x8ttn"]
+streams_count = 3
+stream_0/stream = ExtResource("4_xp28a")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_ysx2k")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("6_g7k5g")
+stream_2/weight = 1.0
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_5n2fv")
@@ -35,3 +87,12 @@ script = ExtResource("2_55ivu")
 
 [node name="PhysicsComponent" type="Node" parent="ComponentHolder"]
 script = ExtResource("3_w7xoq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vent4")
+}
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+stream = SubResource("AudioStreamRandomizer_x8ttn")
