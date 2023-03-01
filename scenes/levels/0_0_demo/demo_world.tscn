@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dod5g3f0a6wib"]
+[gd_scene load_steps=9 format=3 uid="uid://djixyc61vlgb6"]
 
 [ext_resource type="PackedScene" uid="uid://55qhqgsd7ra2" path="res://scenes/entities/automatons/player.tscn" id="1_c87nv"]
+[ext_resource type="PackedScene" uid="uid://ndnk0vcf6acl" path="res://assets_raw/models/objects/demo_area.blend" id="1_h5u5v"]
+[ext_resource type="PackedScene" uid="uid://bj2tsydweakrw" path="res://assets/objects/sliding_door/sliding_door.tscn" id="2_7wu2f"]
+[ext_resource type="PackedScene" uid="uid://d1em4lro5mnsj" path="res://assets/objects/lighting_fixture.tscn" id="4_qnhnj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_unjik"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,25 +21,65 @@ glow_enabled = true
 [sub_resource type="PlaneMesh" id="PlaneMesh_1hngg"]
 size = Vector2(64, 64)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qm0ak"]
-size = Vector3(64, 0.05, 64)
-
 [node name="DemoWorld" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(1, 0.980392, 0.941176, 1)
+light_energy = 1.5
+shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_t1h2n")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("PlaneMesh_1hngg")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="demo_area" parent="." instance=ExtResource("1_h5u5v")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_qm0ak")
+[node name="SlidingDoor" parent="." instance=ExtResource("2_7wu2f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, -29.542)
 
 [node name="Player" parent="." instance=ExtResource("1_c87nv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 1, 0)
+
+[node name="Lights" type="Node3D" parent="."]
+transform = Transform3D(0.872069, 0.489382, 0, -0.489382, 0.872069, 0, 0, 0, 1, -3.34668, 18.527, 0)
+visible = false
+
+[node name="LightingFixture" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+
+[node name="LightingFixture2" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -11)
+
+[node name="LightingFixture3" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 9)
+
+[node name="LightingFixture4" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 8, 0)
+
+[node name="LightingFixture5" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 8, -11)
+
+[node name="LightingFixture6" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 8, 9)
+
+[node name="LightingFixture7" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, 0)
+
+[node name="LightingFixture8" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, -11)
+
+[node name="LightingFixture9" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, 9)
+
+[node name="LightingFixture10" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, 0)
+
+[node name="LightingFixture11" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, -11)
+
+[node name="LightingFixture12" parent="Lights" instance=ExtResource("4_qnhnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 8, 9)
